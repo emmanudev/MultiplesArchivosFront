@@ -10,18 +10,24 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 })
 export class UploadFilesComponent implements OnInit {
 
+  panelOpenState = false;
+
   selectedFiles: FileList;
   //Es el array que contiene los items para mostrar el progreso de subida de cada archivo
   progressInfo = [];
   message = '';
   imageName = "";
+  analizado = false;
 
+  analizerFiles: Observable<any>;
   fileInfos: Observable<any>;
+  jsonDetalles: JSON;
 
   constructor(private uploadFilesService: UploadFilesService) { }
 
   ngOnInit(): void {
     this.fileInfos = this.uploadFilesService.getFiles();
+    
   }
 
   selectFiles(event) {
@@ -45,6 +51,7 @@ export class UploadFilesComponent implements OnInit {
         this.progressInfo[index].value = 0;
         this.message = 'No se puede subir el archivo ' + file.name;
       });
+      this.analizado=true;
   }
 
   uploadFiles() {
@@ -60,5 +67,13 @@ export class UploadFilesComponent implements OnInit {
       this.fileInfos = this.uploadFilesService.getFiles();
     });
   }
+
+  analizerSelect() {
+    this.progressInfo = [];
+    this.analizerFiles = this.uploadFilesService.analisis();
+    
+    
+  }
+
 
 }

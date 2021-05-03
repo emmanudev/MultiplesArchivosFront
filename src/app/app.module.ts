@@ -10,6 +10,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
+import {MatExpansionModule} from '@angular/material/expansion';
+
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import {MatIconModule} from '@angular/material/icon';
     MatButtonModule,
     MatCardModule,
     MatIconModule,
+    MatExpansionModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

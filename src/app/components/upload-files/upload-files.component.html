@@ -1,46 +1,129 @@
 <div id="wrap">
 
-    <mat-card id="box1">
-        <div mode="buffer" *ngFor="let progess of progressInfo">
-            <span>{{progess.fileName}}</span>
-            <span>{{progess.value}}%</span>
-            <div id="progressbar">
-                <mat-progress-bar mode="buffer" value={{progess.value}}>
-                </mat-progress-bar>
-            </div>
-        </div>
+  <mat-card id="box1">
+    <div mode="buffer" *ngFor="let progess of progressInfo">
+      <span>{{progess.fileName}}</span>
+      <span>{{progess.value}}%</span>
+      <div id="progressbar">
+        <mat-progress-bar mode="buffer" value={{progess.value}}>
+        </mat-progress-bar>
+      </div>
+    </div>
+  </mat-card>
+
+  <div id="box2">
+    <button id="selectButton" mat-raised-button (click)="fileInput.click()">Select File to Upload</button>
+
+    <input #fileInput type="file" hidden multiple (change)="selectFiles($event)" />
+    <span *ngIf="imageName">{{imageName}}</span>
+
+    <button id="uploadButton" mat-raised-button *ngIf="selectedFiles" [disabled]="!selectedFiles"
+      (click)="uploadFiles()">
+      Subir Archivos
+    </button>
+  </div>
+
+  <div id="box3">
+    <span>{{message}}</span>
+  </div>
+
+
+  <div id="box4">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Lista de Archivos</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul>
+          <li *ngFor="let file of fileInfos | async">
+            <a href="{{file.url}}">{{file.name}}</a>
+            <mat-icon (click)="deleteFile(file.name)">delete_forever</mat-icon>
+          </li>
+        </ul>
+      </mat-card-content>
     </mat-card>
-
-    <div id="box2">
-        <button id="selectButton" mat-raised-button (click)="fileInput.click()">Select File to Upload</button>
-
-        <input #fileInput type="file" hidden multiple (change)="selectFiles($event)" />
-        <span *ngIf="imageName">{{imageName}}</span>
-
-        <button id="uploadButton" mat-raised-button *ngIf="selectedFiles" [disabled]="!selectedFiles" (click)="uploadFiles()">
-            Subir Archivos
-        </button>
+    <div class="center-text">
+      <button id="analizerButton" mat-raised-button *ngIf="analizado" [disabled]="!analizado" (click)="analizerSelect()">
+        Analizar los archivos
+      </button>
     </div>
+    <ul>
+      <li>Humous</li>
+      <li>Pitta</li>
+      <li>Green salad</li>
+      <li>Halloumi</li>
+    </ul>
+    <ol>
+      <li>Toast pitta, leave to cool, then slice down the edge.</li>
+      <li>Fry the halloumi in a shallow, non-stick pan, until browned on both sides.</li>
+      <li>Wash and chop the salad.</li>
+      <li>Fill pitta with salad, humous, and fried halloumi.</li>
+    </ol>
+  </div>
 
-    <div id="box3">
-        <span>{{message}}</span>
-    </div>
+  
+
+  <div id="box4" *ngIf="analizado" [hidden]="!analizado">
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Analisis</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul *ngFor="let analizados of analizerFiles | async">
+          <li>
+            Archivo : {{analizados.nombreArchivo}}
+          </li>
+          <ul> 
+            <li *ngFor="let anal of analizados.analisis | async">
+                detalles : {{anal}}
+            </li>
+          </ul>
+          <li> 
+            Error : {{analizados.error}}
+          </li>
+          <li> 
+            Mensaje : {{analizados.mensaje}}
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
 
-    <div id="box4">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Lista de Archivos</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <ul>
-                    <li *ngFor="let file of fileInfos | async">
-                        <a href="{{file.url}}">{{file.name}}</a>
-                        <mat-icon (click)="deleteFile(file.name)">delete</mat-icon>
-                    </li>
-                </ul>
-            </mat-card-content>
-        </mat-card>
-    </div>
 
 </div>
+
+
+<!--div id="box2">
+  <button id="analizerButton" mat-raised-button *ngIf="analisis" [disabled]="!analisis" (click)="analizerSelect()">
+    Analizar los archivos
+  </button>
+  <div id="box4">
+    <mat-card-content [hidden]="!analisis">
+      <ul>
+        <li *ngFor="let file of analizerFiles | async">
+          <a href="{{file.url}}">{{file.name}}</a>
+        </li>
+      </ul>
+    </mat-card-content>
+  </div-->
+
+<!--div class="container" [hidden]="!analisis">
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState = true"
+                                     (closed)="panelOpenState = false" *ngFor="analizerFiles">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Detalles 
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      Currently I am {{panelOpenState ? 'open' : 'closed'}}
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <p>I'm visible because I am open</p>
+                </mat-expansion-panel>
+              </mat-accordion>
+        </div-->
+
+  

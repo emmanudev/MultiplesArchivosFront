@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class UploadFilesService {
 
-  baseUrl = environment.baseUrl;
+  //baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -16,7 +16,7 @@ export class UploadFilesService {
     const formData: FormData = new FormData();
     formData.append('files', file);
    
-    const req = new HttpRequest('POST', `${this.baseUrl}/upload`, formData, {
+    const req = new HttpRequest('POST', `http://192.168.1.73:8080/upload`, formData, {
       reportProgress: true,
       responseType: 'json'
     });
@@ -24,11 +24,15 @@ export class UploadFilesService {
   }
 
   getFiles(){
-    return this.http.get(`${this.baseUrl}/files`);
+    return this.http.get(`http://192.168.1.73:8080/files`);
   }
 
   deleteFile(filename: string){
-    return this.http.get(`${this.baseUrl}/delete/${filename}`);
+    return this.http.get(`http://192.168.1.73:8080/delete/${filename}`);
+  }
+
+  analisis(){
+    return this.http.get(`http://192.168.1.73:8080/analizer`);
   }
 
 }
